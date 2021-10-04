@@ -72,7 +72,7 @@ Here is a list of all things to complete for this Library:
   
 - [ ] Action System
   - [ ] Queuing
-  - [ ] Priorities (HIGH, NORMAL, BELOW)
+  - [ ] Priorities (UNINTERRUPTABLE, INTERRUPTABLE)
   - [ ] Timing for Actions
   
 - [ ] Dialog
