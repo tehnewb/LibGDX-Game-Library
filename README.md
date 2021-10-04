@@ -39,10 +39,10 @@ Here is a list of all things to complete for this Library:
   - [ ] Progress Bar
   - [ ] Sound Effects
   
-- [ ] Screens
-  - [ ] Screen States
+- [x] Screens
+  - [x] Screen States
   - [ ] Screen Transitions
-  - [ ] Render & Update Methods (Separated)
+  - [x] Render & Update Methods (Separated)
   
 - [ ] Rendering
   - [ ] Sprite / Texture Overlays & Underlays

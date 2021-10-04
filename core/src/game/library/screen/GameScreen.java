@@ -125,7 +125,8 @@ public abstract class GameScreen implements InputProcessor {
 
 	/**
 	 * Returns the actor hit at the given {@code screenX} and {@code screenY}
-	 * coordinates of this stage.
+	 * coordinates of this stage. If there is no actor at the given coordinates,
+	 * null is returned.
 	 * 
 	 * @param screenX the absolute screen x coordinate
 	 * @param screenY the absolute screen y coordinate

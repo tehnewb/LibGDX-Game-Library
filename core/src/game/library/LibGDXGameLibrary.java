@@ -29,7 +29,6 @@ public class LibGDXGameLibrary implements ApplicationListener {
 		 * Load all constant variables for the library to use and sets the logging level
 		 */
 		LibraryConstants.load(Application.LOG_INFO);
-
 	}
 
 	/**
