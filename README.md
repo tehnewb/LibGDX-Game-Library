@@ -1,4 +1,4 @@
-# LibGDX Game Library
+<center><img src="http://grabilla.com/0ba04-1eb77ea7-c392-4214-b470-7ce7b69a2051.png"></center>
 <p>
 <b>This Library will include code features, snippets, and systems to help design a LibGDX game. 
 The following template is used when implementing any new feature or system to this library.<b>
