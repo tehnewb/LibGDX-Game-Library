@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import game.library.LibGDXGameLibrary;
+import game.library.GameApplication;
 
 /**
  * This class is used to render things on the application's screen. A font,
@@ -28,7 +28,7 @@ public abstract class GameScreen implements InputProcessor {
 	/**
 	 * The parenting game application for this screen
 	 */
-	protected LibGDXGameLibrary game;
+	protected GameApplication game;
 
 	/**
 	 * The font used to render text on this screen
@@ -45,6 +45,11 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	protected SpriteBatch screenBatch;
 
+	/**
+	 * The camera used for the sprite batch
+	 */
+	protected OrthographicCamera batchCamera;
+
 	private OrthographicCamera stageCamera; // the camera used for the stage
 	private Viewport stageViewport; // the viewport used for the stage
 
@@ -57,8 +62,9 @@ public abstract class GameScreen implements InputProcessor {
 	 * 
 	 * @param game the application listener
 	 */
-	public GameScreen(LibGDXGameLibrary game) {
+	public GameScreen(GameApplication game) {
 		this.game = game;
+		this.batchCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stageCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stageViewport = new ScreenViewport(this.stageCamera);
 		this.screenStage = new Stage(this.stageViewport);
@@ -99,6 +105,9 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	public void resize(int width, int height) {
 		this.screenStage.getViewport().update(width, height, true);
+		this.batchCamera.setToOrtho(false, width, height);
+		this.batchCamera.update();
+		this.screenBatch.setProjectionMatrix(this.batchCamera.combined);
 	}
 
 	/**
@@ -239,8 +248,25 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return the stage
 	 */
 	public Stage getStage() {
-		
 		return this.screenStage;
+	}
+
+	/**
+	 * Returns the camera used for the sprite batch of the screen.
+	 * 
+	 * @return the camera
+	 */
+	public OrthographicCamera getBatchCamera() {
+		return batchCamera;
+	}
+
+	/**
+	 * Returns the sprite batch used for rendering textures to this screen.
+	 * 
+	 * @return the sprite batch
+	 */
+	public SpriteBatch getScreenBatch() {
+		return screenBatch;
 	}
 
 	/**

@@ -43,7 +43,7 @@ public final class LibraryConstants {
 		/**
 		 * Loading and setting the cursor to our own person image.
 		 */
-		FileHandle cursorHandle = Gdx.files.internal("Cursors/Pointer.png");
+		FileHandle cursorHandle = Gdx.files.internal("images/Pointer.png");
 		Pixmap cursorPixmap = new Pixmap(cursorHandle);
 		Cursor cursor = Gdx.graphics.newCursor(cursorPixmap, 0, 0); // 0, 0 are the coordinates of the cursor which are used to point from
 		Gdx.graphics.setCursor(cursor);
@@ -62,7 +62,7 @@ public final class LibraryConstants {
 		 * collected
 		 */
 		System.gc();
-		Gdx.app.log("Library Constants", "System Garbage Collector Called.");
+		Gdx.app.log("Library Constants", "Garbage Collector Called.");
 	}
 
 	/**

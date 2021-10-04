@@ -15,7 +15,7 @@ import game.library.screen.GameScreen;
  * @author Albert Beaupre
  * @see game.library.screen.GameScreen
  */
-public class LibGDXGameLibrary implements ApplicationListener {
+public class GameApplication implements ApplicationListener {
 
 	private GameScreen currentScreen;
 	private static boolean paused;
@@ -24,7 +24,7 @@ public class LibGDXGameLibrary implements ApplicationListener {
 	 * Called when the {@link Application} is first created.
 	 */
 	public void create() {
-		LibGDXGameLibrary.paused = false;
+		GameApplication.paused = false;
 
 		/**
 		 * Load all constant variables for the library to use and sets the logging level
@@ -55,10 +55,12 @@ public class LibGDXGameLibrary implements ApplicationListener {
 		ScreenUtils.clear(0, 0, 0, 1);
 
 		if (this.currentScreen != null) {
+			this.currentScreen.getScreenBatch().begin();
 			this.currentScreen.render();
+			this.currentScreen.getScreenBatch().end();
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
-			if (!LibGDXGameLibrary.paused) {
+			if (!GameApplication.paused) {
 				LibraryConstants.getTickPool().update(Gdx.graphics.getDeltaTime());
 				this.currentScreen.update(Gdx.graphics.getDeltaTime());
 			}
@@ -70,7 +72,7 @@ public class LibGDXGameLibrary implements ApplicationListener {
 	 * or visible on-screen. An Application is also paused before it is destroyed.
 	 */
 	public void pause() {
-		LibGDXGameLibrary.paused = true;
+		GameApplication.paused = true;
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class LibGDXGameLibrary implements ApplicationListener {
 	 * when it regains focus.
 	 */
 	public void resume() {
-		LibGDXGameLibrary.paused = false;
+		GameApplication.paused = false;
 	}
 
 	/**

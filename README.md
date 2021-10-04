@@ -10,7 +10,6 @@ The following template is used when implementing any new feature or system to th
 <blockquote>
 <ol type="1">
   <li> Code Implemented</li>
-  <li> JUnit Test Implemented</li>
   <li> Commit to GitHub</li>
   <li> Wiki Implemented</li>
   <li> Mark off the list down below!</li>
@@ -61,17 +60,12 @@ Here is a list of all things to complete for this Library:
   - [ ] Flexible Event Methods*
   - [ ] Array Assigned (Indicies) Event Listeners
   - [ ] Event Registering / Unregistering 
-  
-- [ ] Pooling
-  - [ ] Reusable Objects
-  - [ ] Current In-Use Objects List or Array
-  - [ ] Inaccessible Objects List or Array
 
-- [ ] Container
-  - [ ] Adding / Removing Items
-  - [ ] Shifting Items
-  - [ ] Swapping Items
-  - [ ] Transfering Between Containers
+- [x] Container
+  - [x] Adding / Removing Items
+  - [x] Shifting Items
+  - [x] Swapping Items
+  - [x] Transfering Between Containers
   
 - [ ] Action System
   - [ ] Queuing

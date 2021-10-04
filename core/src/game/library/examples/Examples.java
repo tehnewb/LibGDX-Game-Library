@@ -1,9 +1,10 @@
 package game.library.examples;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
-import game.library.LibGDXGameLibrary;
+import game.library.GameApplication;
 import game.library.screen.GameScreen;
 import game.library.tick.Tick;
 
@@ -16,6 +17,7 @@ import game.library.tick.Tick;
  */
 public class Examples extends GameScreen {
 
+	private Texture titleTexture;
 	private VisLabel fpsLabel;
 
 	/**
@@ -24,12 +26,13 @@ public class Examples extends GameScreen {
 	 * 
 	 * @param game the parenting application
 	 */
-	public Examples(LibGDXGameLibrary game) {
+	public Examples(GameApplication game) {
 		super(game);
 	}
 
 	@Override
 	public void create() {
+		this.titleTexture = new Texture("images/Title.png");
 		this.fpsLabel = new VisLabel("FPS: ");
 		this.fpsLabel.setPosition(15, Gdx.graphics.getHeight() - 40);
 		this.fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
@@ -53,6 +56,10 @@ public class Examples extends GameScreen {
 	@Override
 	public void render() {
 		// TODO render all things for the screen here
+		int titleX = Gdx.graphics.getWidth() / 2 - this.titleTexture.getWidth() / 2;
+		int titleY = Gdx.graphics.getHeight() - this.titleTexture.getHeight() - 15;
+
+		this.screenBatch.draw(this.titleTexture, titleX, titleY);
 	}
 
 	@Override
