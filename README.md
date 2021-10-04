@@ -52,10 +52,10 @@ Here is a list of all things to complete for this Library:
   - [ ] Sprite / Texture Shading
   - [ ] Lighting System
   
-- [ ] Tick/Timer System
-  - [ ] Starting / Stopping
-  - [ ] Duration / Delay Manipulation
-  - [ ] Delta Timing
+- [x] Tick/Timer System
+  - [x] Starting / Stopping
+  - [x] Duration / Delay Manipulation
+  - [x] Delta Timing
   
 - [ ] Event Management
   - [ ] Flexible Event Methods*
