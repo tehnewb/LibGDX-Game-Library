@@ -44,8 +44,7 @@ Here is a list of all things to complete for this Library:
   - [ ] Sound Effects
   
 - [x] Screens
-  - [x] Screen States
-  - [ ] Screen Transitions
+  - [x] Screens Changable with application
   - [x] Render & Update Methods (Separated)
   
 - [ ] Rendering
