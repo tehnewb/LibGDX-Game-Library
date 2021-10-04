@@ -1,7 +1,11 @@
-<center><img src="http://grabilla.com/0ba04-1eb77ea7-c392-4214-b470-7ce7b69a2051.png"></center>
+<p align="center">
+<img src="http://grabilla.com/0ba04-1eb77ea7-c392-4214-b470-7ce7b69a2051.png" align="center">
+  </p>
+<p align="center"><br>
+  <center><b>This Library will include code features, snippets, and systems to help design a LibGDX game. 
+The following template is used when implementing any new feature or system to this library.<b></center>
+</p>
 <p>
-<b>This Library will include code features, snippets, and systems to help design a LibGDX game. 
-The following template is used when implementing any new feature or system to this library.<b>
 <br><br>
 <blockquote>
 <ol type="1">
