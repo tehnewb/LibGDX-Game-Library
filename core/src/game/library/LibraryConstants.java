@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
+
+import game.library.tick.Tick;
+import game.library.tick.TickPool;
 
 /**
  * This class holds all the library constant variables.
@@ -29,6 +33,13 @@ public final class LibraryConstants {
 	 */
 	public static void load(int logLevel) {
 		Gdx.app.setLogLevel(logLevel);
+
+		/**
+		 * Adds the tick pool class to the pools map with an initial capacity of 10
+		 */
+		Pools.set(Tick.class, new TickPool(10));
+		Gdx.app.log("Library Constants", "Set Tick Pool with initial capacity of 10.");
+
 		/**
 		 * Loading and setting the cursor to our own person image.
 		 */
@@ -52,6 +63,15 @@ public final class LibraryConstants {
 		 */
 		System.gc();
 		Gdx.app.log("Library Constants", "System Garbage Collector Called.");
+	}
+
+	/**
+	 * Returns the {@code TickPool} constant of this {@code LibraryConstants} class.
+	 * 
+	 * @return the tick pool
+	 */
+	public static TickPool getTickPool() {
+		return (TickPool) Pools.get(Tick.class);
 	}
 
 }

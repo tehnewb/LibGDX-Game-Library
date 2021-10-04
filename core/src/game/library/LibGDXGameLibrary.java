@@ -5,6 +5,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import game.library.examples.Examples;
 import game.library.screen.GameScreen;
 
 /**
@@ -29,6 +30,8 @@ public class LibGDXGameLibrary implements ApplicationListener {
 		 * Load all constant variables for the library to use and sets the logging level
 		 */
 		LibraryConstants.load(Application.LOG_INFO);
+
+		this.setScreen(new Examples(this));
 	}
 
 	/**
@@ -56,6 +59,7 @@ public class LibGDXGameLibrary implements ApplicationListener {
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
 			if (!LibGDXGameLibrary.paused) {
+				LibraryConstants.getTickPool().update(Gdx.graphics.getDeltaTime());
 				this.currentScreen.update(Gdx.graphics.getDeltaTime());
 			}
 		}
