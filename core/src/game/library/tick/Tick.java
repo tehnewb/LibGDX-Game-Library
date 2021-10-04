@@ -2,7 +2,7 @@ package game.library.tick;
 
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-import game.library.LibraryConstants;
+import game.LibraryConstants;
 
 /**
  * This class is used for timed actions. The delay of the tick is the time

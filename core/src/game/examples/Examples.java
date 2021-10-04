@@ -1,10 +1,10 @@
-package game.library.examples;
+package game.examples;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
-import game.library.GameApplication;
+import game.GameApplication;
 import game.library.screen.GameScreen;
 import game.library.tick.Tick;
 

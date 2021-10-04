@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import game.library.GameApplication;
+import game.GameApplication;
 
 /**
  * This class is used to render things on the application's screen. A font,

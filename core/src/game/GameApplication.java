@@ -1,11 +1,11 @@
-package game.library;
+package game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.library.examples.Examples;
+import game.examples.Examples;
 import game.library.screen.GameScreen;
 
 /**
