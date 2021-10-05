@@ -1,4 +1,4 @@
-package game.library.screen;
+package library.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

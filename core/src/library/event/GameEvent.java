@@ -1,4 +1,4 @@
-package game.library.event;
+package library.event;
 
 import game.LibraryConstants;
 
@@ -11,12 +11,12 @@ import game.LibraryConstants;
  * {@code AnimalEvent} entity.actor.action would occur.
  * 
  * <p>
- * The {@link game.library.event.GameEventManager} class is used to manage the
+ * The {@link library.event.GameEventManager} class is used to manage the
  * calling, registering, and unregistering of an {@code Event}.
  * 
- * @see game.library.event.GameEventManager
- * @see game.library.event.GameEventListener
- * @see game.library.event.GameEventMethod
+ * @see library.event.GameEventManager
+ * @see library.event.GameEventListener
+ * @see library.event.GameEventMethod
  * 
  * @author Albert Beaupre
  */
@@ -43,7 +43,7 @@ public class GameEvent {
 
 	/**
 	 * This will switch the {@code consumed} flag of this {@code Event} to be on so
-	 * the {@link game.library.event.GameEventManager} will know it has been consumed
+	 * the {@link library.event.GameEventManager} will know it has been consumed
 	 * and will <b>not continue to be called.</b>
 	 */
 	public void consume() {
@@ -53,7 +53,7 @@ public class GameEvent {
 	/**
 	 * Returns {@code true} if this {@code Event} has been flagged as consumed so it
 	 * will <b>not continue to be called</b> by the
-	 * {@link game.library.event.GameEventManager}, otherwise returns {@code false}.
+	 * {@link library.event.GameEventManager}, otherwise returns {@code false}.
 	 * 
 	 * @return true if flagged as consumed; return false otherwise
 	 */
@@ -63,7 +63,7 @@ public class GameEvent {
 
 	/**
 	 * This will switch the {@code cancelled} flag of this {@code Event} to be on so
-	 * the {@link game.library.event.GameEventManager} will know it has been cancelled
+	 * the {@link library.event.GameEventManager} will know it has been cancelled
 	 * and will <b>not be called at all.</b>
 	 */
 	public void cancel() {
@@ -73,7 +73,7 @@ public class GameEvent {
 	/**
 	 * Returns {@code true} if this {@code Event} has been flagged as cancelled so
 	 * it will <b>not be called at all</b> by the
-	 * {@link game.library.event.GameEventManager}, otherwise returns {@code false}.
+	 * {@link library.event.GameEventManager}, otherwise returns {@code false}.
 	 * 
 	 * @return true if flagged as cancelled; return false otherwise
 	 */

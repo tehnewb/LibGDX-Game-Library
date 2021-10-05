@@ -1,4 +1,4 @@
-package game.library.dialog;
+package library.dialog;
 
 import java.util.ArrayDeque;
 

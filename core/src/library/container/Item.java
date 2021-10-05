@@ -1,11 +1,11 @@
-package game.library.container;
+package library.container;
 
 /**
  * This item is used for the {@code ItemContainer} class.
  *
  * @author Albert Beaupre
  * 
- * @see game.library.container.ItemContainer
+ * @see library.container.ItemContainer
  */
 public class Item {
 

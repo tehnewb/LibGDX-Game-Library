@@ -1,4 +1,4 @@
-package game.library.event;
+package library.event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  * 
  * @author Albert Beaupre
  * 
- * @see game.library.event.GameEventListener
- * @see game.library.event.GameEvent
+ * @see library.event.GameEventListener
+ * @see library.event.GameEvent
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

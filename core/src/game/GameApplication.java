@@ -5,15 +5,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.library.screen.GameScreen;
-import game.main.screen.ApplicationScreen;
+import game.screen.ApplicationScreen;
+import library.screen.GameScreen;
 
 /**
  * This class is the {@code ApplicationListener} for the application. Handles
  * all {@link GameScreen} screens.
  * 
  * @author Albert Beaupre
- * @see game.library.screen.GameScreen
+ * @see library.screen.GameScreen
  */
 public class GameApplication implements ApplicationListener {
 

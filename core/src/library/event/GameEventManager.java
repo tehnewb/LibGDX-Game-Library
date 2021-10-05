@@ -1,4 +1,4 @@
-package game.library.event;
+package library.event;
 
 import java.lang.reflect.Method;
 
@@ -14,9 +14,9 @@ import com.badlogic.gdx.utils.Array;
  * successfully listened to an {@code Event}, any method that has been
  * registered within the listener will be called.
  * 
- * @see game.library.event.GameEvent
- * @see game.library.event.GameEventListener
- * @see game.library.event.GameEventMethod
+ * @see library.event.GameEvent
+ * @see library.event.GameEventListener
+ * @see library.event.GameEventMethod
  * 
  * @author Albert Beaupre
  */
@@ -96,7 +96,7 @@ public class GameEventManager {
 	 * 
 	 * @param listener the listener to be registered
 	 * 
-	 * @see game.library.event.GameEventListener
+	 * @see library.event.GameEventListener
 	 * 
 	 * @throws NullPointerException if the listener argument is null
 	 */
@@ -117,7 +117,7 @@ public class GameEventManager {
 	 * 
 	 * @param listener the listener to be unregistered, if existing
 	 * 
-	 * @see game.library.event.GameEventListener
+	 * @see library.event.GameEventListener
 	 * 
 	 * @throws NullPointerException if the listener argument is null
 	 */
@@ -142,7 +142,7 @@ public class GameEventManager {
 	 * 
 	 * @param event the event to be called for listening
 	 * 
-	 * @see game.library.event.GameEvent
+	 * @see library.event.GameEvent
 	 * 
 	 * @throws NullPointerException if the event argument is null
 	 */

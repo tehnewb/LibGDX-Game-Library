@@ -1,4 +1,4 @@
-package game.library.dialog;
+package library.dialog;
 
 /**
  * The {@code Page} class represents a page within a dialog (written

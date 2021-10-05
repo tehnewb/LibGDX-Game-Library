@@ -1,4 +1,4 @@
-package game.library.tick;
+package library.tick;
 
 import com.badlogic.gdx.utils.Pool.Poolable;
 
@@ -11,7 +11,7 @@ import game.LibraryConstants;
  * @author Albert Beaupre
  * 
  * @see com.badlogic.gdx.utils.Pool.Poolable
- * @see game.library.tick.TickPool
+ * @see library.tick.TickPool
  */
 public class Tick implements Poolable {
 

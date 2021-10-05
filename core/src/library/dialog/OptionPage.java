@@ -1,4 +1,4 @@
-package game.library.dialog;
+package library.dialog;
 
 /**
  * The {@code OptionPage} will hold the {@link game.dialog.DialogOption} options
