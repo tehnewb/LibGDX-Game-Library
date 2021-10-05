@@ -57,8 +57,8 @@ Here is a list of all things to complete for this Library:
   - [x] Delta Timing
   
 - [x] Event Management
-  - [x] Flexible Event Methods*
-  - [x] Array Assigned (Indicies) Event Listeners
+  - [x] Flexible Event Methods
+  - [x] Array Assigned Event Listeners
   - [x] Event Registering / Unregistering 
 
 - [x] Container
@@ -72,11 +72,11 @@ Here is a list of all things to complete for this Library:
   - [ ] Priorities (UNINTERRUPTABLE, INTERRUPTABLE)
   - [ ] Timing for Actions
   
-- [ ] Dialog
-  - [ ] Text Pages
-  - [ ] Option Pages
+- [x] Dialog
+  - [x] Text Pages
+  - [x] Option Pages
   - [ ] Sprite/Texture Pages
-  - [ ] Chaining System (Dialog Builder)
+  - [x] Chaining System
 
 - [ ] Loot & Drop Table
   - [ ] Specific Rarity Types (NORMAL, RARE, EXTRA_RARE)

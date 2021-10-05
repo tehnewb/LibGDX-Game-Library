@@ -5,8 +5,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.library.screen.ApplicationScreen;
 import game.library.screen.GameScreen;
+import game.main.screen.ApplicationScreen;
 
 /**
  * This class is the {@code ApplicationListener} for the application. Handles
@@ -55,9 +55,7 @@ public class GameApplication implements ApplicationListener {
 		ScreenUtils.clear(0, 0, 0, 1);
 
 		if (this.currentScreen != null) {
-			this.currentScreen.getScreenBatch().begin();
 			this.currentScreen.render();
-			this.currentScreen.getScreenBatch().end();
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
 			if (!GameApplication.paused) {

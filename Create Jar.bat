@@ -1,0 +1,2 @@
+./gradlew desktop:dist
+pause
