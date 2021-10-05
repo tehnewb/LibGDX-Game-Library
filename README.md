@@ -56,10 +56,10 @@ Here is a list of all things to complete for this Library:
   - [x] Duration / Delay Manipulation
   - [x] Delta Timing
   
-- [ ] Event Management
-  - [ ] Flexible Event Methods*
-  - [ ] Array Assigned (Indicies) Event Listeners
-  - [ ] Event Registering / Unregistering 
+- [x] Event Management
+  - [x] Flexible Event Methods*
+  - [x] Array Assigned (Indicies) Event Listeners
+  - [x] Event Registering / Unregistering 
 
 - [x] Container
   - [x] Adding / Removing Items
