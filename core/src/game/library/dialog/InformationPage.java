@@ -1,4 +1,4 @@
-package library.dialog;
+package game.library.dialog;
 
 /**
  * The {@code InformationPage} just displays text as an informative.

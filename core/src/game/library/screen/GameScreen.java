@@ -1,4 +1,4 @@
-package library.screen;
+package game.library.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import game.GameApplication;
+import game.GameApplicationListener;
 
 /**
  * This class is used to render things on the application's screen. A font,
@@ -28,7 +28,7 @@ public abstract class GameScreen implements InputProcessor {
 	/**
 	 * The parenting game application for this screen
 	 */
-	protected GameApplication game;
+	protected GameApplicationListener game;
 
 	/**
 	 * The font used to render text on this screen
@@ -62,7 +62,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * 
 	 * @param game the application listener
 	 */
-	public GameScreen(GameApplication game) {
+	public GameScreen(GameApplicationListener game) {
 		this.game = game;
 		this.batchCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stageCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

@@ -5,17 +5,17 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.screen.ApplicationScreen;
-import library.screen.GameScreen;
+import game.library.screen.GameScreen;
+import game.main.screen.ApplicationScreen;
 
 /**
  * This class is the {@code ApplicationListener} for the application. Handles
  * all {@link GameScreen} screens.
  * 
  * @author Albert Beaupre
- * @see library.screen.GameScreen
+ * @see game.library.screen.GameScreen
  */
-public class GameApplication implements ApplicationListener {
+public class GameApplicationListener implements ApplicationListener {
 
 	private GameScreen currentScreen;
 	private static boolean paused;
@@ -24,7 +24,7 @@ public class GameApplication implements ApplicationListener {
 	 * Called when the {@link Application} is first created.
 	 */
 	public void create() {
-		GameApplication.paused = false;
+		GameApplicationListener.paused = false;
 
 		/**
 		 * Load all constant variables for the library to use and sets the logging level
@@ -58,7 +58,7 @@ public class GameApplication implements ApplicationListener {
 			this.currentScreen.render();
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
-			if (!GameApplication.paused) {
+			if (!GameApplicationListener.paused) {
 				LibraryConstants.getTickPool().update(Gdx.graphics.getDeltaTime());
 				this.currentScreen.update(Gdx.graphics.getDeltaTime());
 			}
@@ -70,7 +70,7 @@ public class GameApplication implements ApplicationListener {
 	 * or visible on-screen. An Application is also paused before it is destroyed.
 	 */
 	public void pause() {
-		GameApplication.paused = true;
+		GameApplicationListener.paused = true;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class GameApplication implements ApplicationListener {
 	 * when it regains focus.
 	 */
 	public void resume() {
-		GameApplication.paused = false;
+		GameApplicationListener.paused = false;
 	}
 
 	/**

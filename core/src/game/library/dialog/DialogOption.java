@@ -1,4 +1,4 @@
-package library.dialog;
+package game.library.dialog;
 
 import java.util.Objects;
 

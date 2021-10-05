@@ -1,4 +1,4 @@
-package library.tick;
+package game.library.tick;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Pool;
  * 
  * @author Albert Beaupre
  * 
- * @see library.tick.Tick
+ * @see game.library.tick.Tick
  * @see com.badlogic.gdx.utils.Pool
  */
 public class TickPool extends Pool<Tick> {

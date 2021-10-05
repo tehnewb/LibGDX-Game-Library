@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
 
-import library.event.GameEventManager;
-import library.tick.Tick;
-import library.tick.TickPool;
+import game.library.event.GameEventManager;
+import game.library.tick.Tick;
+import game.library.tick.TickPool;
 
 /**
  * This class holds all the library constant variables.

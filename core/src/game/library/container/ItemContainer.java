@@ -1,4 +1,4 @@
-package library.container;
+package game.library.container;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.Comparator;
  * 
  * @author Albert Beaupre
  * 
- * @see library.container.Item
+ * @see game.library.container.Item
  */
 public class ItemContainer {
 

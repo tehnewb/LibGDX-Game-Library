@@ -1,4 +1,4 @@
-package library.dialog;
+package game.library.dialog;
 
 /**
  * The {@code DialogTransactor} is meant to carry out conversations and will
