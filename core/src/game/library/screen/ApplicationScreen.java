@@ -1,11 +1,15 @@
-package game.examples;
+package game.library.screen;
+
+import java.awt.event.ItemEvent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
 import game.GameApplication;
-import game.library.screen.GameScreen;
+import game.library.event.GameEvent;
+import game.library.event.GameEventListener;
+import game.library.event.GameEventMethod;
 import game.library.tick.Tick;
 
 /**
@@ -15,7 +19,7 @@ import game.library.tick.Tick;
  * 
  * @see game.library.screen.GameScreen
  */
-public class Examples extends GameScreen {
+public class ApplicationScreen extends GameScreen {
 
 	private Texture titleTexture;
 	private VisLabel fpsLabel;
@@ -26,8 +30,20 @@ public class Examples extends GameScreen {
 	 * 
 	 * @param game the parenting application
 	 */
-	public Examples(GameApplication game) {
+	public ApplicationScreen(GameApplication game) {
 		super(game);
+	}
+
+	class PlayerMovementEvent extends GameEvent {
+
+	}
+
+	class PlayerMovementListener implements GameEventListener {
+
+		@GameEventMethod
+		public void checkItemAdd(ItemEvent event) {
+			System.out.println("WHUT DUDE!");
+		}
 	}
 
 	@Override
@@ -45,6 +61,7 @@ public class Examples extends GameScreen {
 		 *               label every time
 		 */
 		new Tick().action(() -> fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond())).delay(1).start();
+
 	}
 
 	@Override

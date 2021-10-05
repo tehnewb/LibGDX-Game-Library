@@ -5,7 +5,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import game.examples.Examples;
+import game.library.screen.ApplicationScreen;
 import game.library.screen.GameScreen;
 
 /**
@@ -31,7 +31,7 @@ public class GameApplication implements ApplicationListener {
 		 */
 		LibraryConstants.load(Application.LOG_INFO);
 
-		this.setScreen(new Examples(this));
+		this.setScreen(new ApplicationScreen(this));
 	}
 
 	/**

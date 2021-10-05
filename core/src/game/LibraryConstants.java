@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
 
+import game.library.event.GameEventManager;
 import game.library.tick.Tick;
 import game.library.tick.TickPool;
 
@@ -16,6 +17,8 @@ import game.library.tick.TickPool;
  * @author Albert Beaupre
  */
 public final class LibraryConstants {
+
+	private static final GameEventManager EVENT_MANAGER = new GameEventManager();
 
 	/**
 	 * Loads all variables to be defined in the application.
@@ -72,6 +75,17 @@ public final class LibraryConstants {
 	 */
 	public static TickPool getTickPool() {
 		return (TickPool) Pools.get(Tick.class);
+	}
+
+	/**
+	 * Returns the {@code EventManager} constant of this {@code LibraryConstants}
+	 * class. The Event Manager is used for calling and executing events listened
+	 * for by the EventListener class.
+	 * 
+	 * @return the event manager
+	 */
+	public static GameEventManager getEventManager() {
+		return LibraryConstants.EVENT_MANAGER;
 	}
 
 }
