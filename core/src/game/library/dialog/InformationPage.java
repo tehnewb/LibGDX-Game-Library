@@ -8,7 +8,7 @@ package game.library.dialog;
 public class InformationPage extends DialogPage {
 
 	/**
-	 * Constructs a new {@code InformationPage} with the specified {@code text}.
+	 * Constructs a new {@code InformationPage} with the given {@code text}.
 	 * 
 	 * @param text the text displayed on this page
 	 */

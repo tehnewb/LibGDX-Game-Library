@@ -18,7 +18,7 @@ public class GameDialog {
 	/**
 	 * The transactor that will converse within this dialog.
 	 */
-	protected final DialogTransactor transactor;
+	protected final DialogActor transactor;
 
 	private DialogPage currentPage;
 	private boolean finished;
@@ -28,7 +28,7 @@ public class GameDialog {
 	 * 
 	 * @param transactor the transactor
 	 */
-	public GameDialog(DialogTransactor transactor) {
+	public GameDialog(DialogActor transactor) {
 		this.transactor = transactor;
 	}
 
@@ -156,7 +156,7 @@ public class GameDialog {
 	 * <p>
 	 * The {@code Page} returned is the next page within this {@code Dialog}, if
 	 * existing, If there is not another page, the
-	 * {@link DialogTransactor#exitDialog()} method is called and the dialog is
+	 * {@link DialogActor#exitDialog()} method is called and the dialog is
 	 * stopped and null is returned.
 	 * 
 	 * @return the next page; return null otherwise

@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * The {@code DialogOption} class represents an entityOption to be chosen within
  * a OptionPage. An action must be set to this {@code DialogOption} so it may be
- * executed upon this {@code DialogOption} being selected.
+ * executed upon this being selected in an option page
  * 
  * @author Albert Beaupre
  */
