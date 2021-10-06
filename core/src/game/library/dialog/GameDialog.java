@@ -18,7 +18,7 @@ public class GameDialog {
 	/**
 	 * The transactor that will converse within this dialog.
 	 */
-	protected final DialogActor transactor;
+	protected final DialogHandler transactor;
 
 	private DialogPage currentPage;
 	private boolean finished;
@@ -28,7 +28,7 @@ public class GameDialog {
 	 * 
 	 * @param transactor the transactor
 	 */
-	public GameDialog(DialogActor transactor) {
+	public GameDialog(DialogHandler transactor) {
 		this.transactor = transactor;
 	}
 
@@ -78,6 +78,17 @@ public class GameDialog {
 		DialogOption option4 = new DialogOption(optionName4, i4);
 		DialogOption option5 = new DialogOption(optionName5, i5);
 		pages.add(new OptionPage("Choose an Option", option1, option2, option3, option4, option5));
+		return this;
+	}
+
+	/**
+	 * Writes an action to the last {@code Page} written to this {@code Dialog}.
+	 * 
+	 * @param consumer the action to execute when the {@code Page} is opened.
+	 * @return a chain of this instance
+	 */
+	public GameDialog then(Runnable action) {
+		pages.peekLast().action(action);
 		return this;
 	}
 
@@ -156,8 +167,8 @@ public class GameDialog {
 	 * <p>
 	 * The {@code Page} returned is the next page within this {@code Dialog}, if
 	 * existing, If there is not another page, the
-	 * {@link DialogActor#exitDialog()} method is called and the dialog is
-	 * stopped and null is returned.
+	 * {@link DialogHandler#exitDialog()} method is called and the dialog is stopped
+	 * and null is returned.
 	 * 
 	 * @return the next page; return null otherwise
 	 */
@@ -179,6 +190,8 @@ public class GameDialog {
 		} else {
 			transactor.displayDialogPage(page);
 		}
+
+		if (page.getAction() != null) page.getAction().run();
 
 		return page;
 	}

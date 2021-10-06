@@ -24,6 +24,11 @@ public class DialogPage {
 	private int npcId = -1;
 
 	/**
+	 * This is an action taken once this page has been opened
+	 */
+	private Runnable action;
+
+	/**
 	 * Constructs a new {@code Page} from the specified {@code text}. If the text is
 	 * null or has no length to it, then the text value is set to "..."
 	 * 
@@ -35,6 +40,17 @@ public class DialogPage {
 	}
 
 	/**
+	 * Sets the given action to this page
+	 * 
+	 * @param action the action to set
+	 * @return this page for chaining
+	 */
+	public DialogPage action(Runnable action) {
+		this.action = action;
+		return this;
+	}
+
+	/**
 	 * Sets the npc id of this page.
 	 * 
 	 * @param npcId the npc id to set
@@ -43,6 +59,15 @@ public class DialogPage {
 	public DialogPage npcId(int npcId) {
 		this.npcId = npcId;
 		return this;
+	}
+
+	/**
+	 * Returns the action of this page
+	 * 
+	 * @return the action
+	 */
+	public Runnable getAction() {
+		return action;
 	}
 
 	/**

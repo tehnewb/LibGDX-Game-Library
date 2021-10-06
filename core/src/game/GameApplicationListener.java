@@ -52,7 +52,7 @@ public class GameApplicationListener implements ApplicationListener {
 	 * Called when the {@link Application} should render itself.
 	 */
 	public void render() {
-		ScreenUtils.clear(0, 0, 0, 1);
+		ScreenUtils.clear(0, 0, 0, 0, true);
 
 		if (this.currentScreen != null) {
 			this.currentScreen.render();

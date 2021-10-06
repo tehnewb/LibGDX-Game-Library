@@ -5,7 +5,7 @@ package game.library.dialog;
  * 
  * @author Albert Beaupre
  */
-public interface DialogActor {
+public interface DialogHandler {
 
 	/**
 	 * This method is called when the dialog is initialized for the first time.
