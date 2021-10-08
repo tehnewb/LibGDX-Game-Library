@@ -3,7 +3,7 @@ package game.library.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import game.GameApplicationListener;
+import game.LibraryConstants;
 
 /**
  * Main class initializer
@@ -20,6 +20,6 @@ public class DesktopLauncher {
 		config.height = 720; // 720 pixels height for the application window
 		config.resizable = true;
 		config.title = " LibGDX Game Library";
-		new LwjglApplication(new GameApplicationListener(), config);
+		new LwjglApplication(LibraryConstants.getApplicationListener(), config);
 	}
 }

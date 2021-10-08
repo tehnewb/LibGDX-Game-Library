@@ -1,5 +1,7 @@
 package game.library.dialog;
 
+import java.util.Objects;
+
 /**
  * The {@code Page} class represents a page within a dialog (written
  * conversation). This class is used by the {@link game.GameDialog.Dialog} class
@@ -35,7 +37,7 @@ public class DialogPage {
 	 * @param text the text displayed on this page
 	 */
 	public DialogPage(String text) {
-		if (text == null || text.isEmpty()) text = "...";
+		if (Objects.isNull(text) || text.isEmpty()) text = "...";
 		this.text = text;
 	}
 

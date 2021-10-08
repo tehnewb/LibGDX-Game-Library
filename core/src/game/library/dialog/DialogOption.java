@@ -32,7 +32,7 @@ public class DialogOption {
 	 */
 	public DialogOption(String name, Runnable action) {
 		this.name = name;
-		this.action = Objects.requireNonNull(action, "The action of the entityOption cannot equal null");
+		this.action = Objects.requireNonNull(action, "The action of the entityOption cannot be NULL");
 	}
 
 	/**

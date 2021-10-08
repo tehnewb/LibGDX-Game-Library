@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
 
 import game.library.event.GameEventManager;
+import game.library.projectile.Projectile;
+import game.library.projectile.ProjectilePool;
 import game.library.tick.Tick;
 import game.library.tick.TickPool;
 
@@ -19,13 +21,16 @@ import game.library.tick.TickPool;
 public final class LibraryConstants {
 
 	private static final GameEventManager EVENT_MANAGER = new GameEventManager();
+	private static final GameApplicationListener APPLICATION_LISTENER = new GameApplicationListener();
 
 	/**
 	 * Loads all variables to be defined in the application.
 	 * 
 	 * <p>
-	 * Current loading these constants:
+	 * Currently loading these constants:
 	 * <ul>
+	 * <li>Tick Pool</li>
+	 * <li>Projectile Pool</li>
 	 * <li>Custom cursor</li>
 	 * <li>VisUI Skin</li>
 	 * <li>System Garbage Collector</li>
@@ -42,6 +47,13 @@ public final class LibraryConstants {
 		 */
 		Pools.set(Tick.class, new TickPool(10));
 		Gdx.app.log("Library Constants", "Set Tick Pool with initial capacity of 10.");
+
+		/**
+		 * Adds the projectile pool class to the pools map with an initial capacity of
+		 * 10
+		 */
+		Pools.set(Projectile.class, new ProjectilePool(10));
+		Gdx.app.log("Library Constants", "Set Projectile Pool with initial capacity of 10.");
 
 		/**
 		 * Loading and setting the cursor to our own person image.
@@ -78,6 +90,16 @@ public final class LibraryConstants {
 	}
 
 	/**
+	 * Returns the {@code ProjectilePool} constant of this {@code LibraryConstants}
+	 * class.
+	 * 
+	 * @return the projectile pool
+	 */
+	public static ProjectilePool getProjectilePool() {
+		return (ProjectilePool) Pools.get(Projectile.class);
+	}
+
+	/**
 	 * Returns the {@code EventManager} constant of this {@code LibraryConstants}
 	 * class. The Event Manager is used for calling and executing events listened
 	 * for by the EventListener class.
@@ -86,6 +108,15 @@ public final class LibraryConstants {
 	 */
 	public static GameEventManager getEventManager() {
 		return LibraryConstants.EVENT_MANAGER;
+	}
+
+	/**
+	 * Returns the {@code ApplicationListener} that this game is handled by.
+	 * 
+	 * @return the application listener
+	 */
+	public static GameApplicationListener getApplicationListener() {
+		return LibraryConstants.APPLICATION_LISTENER;
 	}
 
 }

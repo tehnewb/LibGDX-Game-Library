@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -17,15 +19,14 @@ import game.main.screen.ApplicationScreen;
  */
 public class GameApplicationListener implements ApplicationListener {
 
+	private static boolean PAUSED = false; // The paused flag determined whether or not the game will update
+
 	private GameScreen currentScreen;
-	private static boolean paused;
 
 	/**
 	 * Called when the {@link Application} is first created.
 	 */
 	public void create() {
-		GameApplicationListener.paused = false;
-
 		/**
 		 * Load all constant variables for the library to use and sets the logging level
 		 */
@@ -43,7 +44,7 @@ public class GameApplicationListener implements ApplicationListener {
 	 * @param height the new height in pixels
 	 */
 	public void resize(int width, int height) {
-		if (this.currentScreen != null) {
+		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.resize(width, height);
 		}
 	}
@@ -54,13 +55,18 @@ public class GameApplicationListener implements ApplicationListener {
 	public void render() {
 		ScreenUtils.clear(0, 0, 0, 0, true);
 
-		if (this.currentScreen != null) {
+		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.render();
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
-			if (!GameApplicationListener.paused) {
-				LibraryConstants.getTickPool().update(Gdx.graphics.getDeltaTime());
-				this.currentScreen.update(Gdx.graphics.getDeltaTime());
+
+			LibraryConstants.getProjectilePool().render(this.currentScreen.getScreenBatch());
+
+			if (!GameApplicationListener.PAUSED) {
+				final float deltaTime = Gdx.graphics.getDeltaTime();
+				this.currentScreen.update(deltaTime);
+				LibraryConstants.getTickPool().update(deltaTime);
+				LibraryConstants.getProjectilePool().update(deltaTime);
 			}
 		}
 	}
@@ -70,7 +76,7 @@ public class GameApplicationListener implements ApplicationListener {
 	 * or visible on-screen. An Application is also paused before it is destroyed.
 	 */
 	public void pause() {
-		GameApplicationListener.paused = true;
+		GameApplicationListener.PAUSED = true;
 	}
 
 	/**
@@ -78,7 +84,7 @@ public class GameApplicationListener implements ApplicationListener {
 	 * when it regains focus.
 	 */
 	public void resume() {
-		GameApplicationListener.paused = false;
+		GameApplicationListener.PAUSED = false;
 	}
 
 	/**
@@ -86,7 +92,7 @@ public class GameApplicationListener implements ApplicationListener {
 	 * {@link #pause()}.
 	 */
 	public void dispose() {
-		if (this.currentScreen != null) {
+		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.dispose();
 		}
 	}
@@ -104,11 +110,11 @@ public class GameApplicationListener implements ApplicationListener {
 		if (screen == null) {
 			throw new NullPointerException("You cannot set a NULL GameScreen");
 		}
-		if (this.currentScreen != null) {
+		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.dispose(); // disposes of the current screen before it sets a new screen
 		}
 		this.currentScreen = screen;
-		if (this.currentScreen != null) {
+		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.create();
 			this.currentScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		}
@@ -121,6 +127,16 @@ public class GameApplicationListener implements ApplicationListener {
 	 */
 	public GameScreen getScreen() {
 		return this.currentScreen;
+	}
+
+	/**
+	 * Returns true if this {@code GameApplicationListener} is paused. If this
+	 * returns true, then the application will not update, but it will still render.
+	 * 
+	 * @return true if paused; return false otherwise
+	 */
+	public static boolean isPaused() {
+		return GameApplicationListener.PAUSED;
 	}
 
 }

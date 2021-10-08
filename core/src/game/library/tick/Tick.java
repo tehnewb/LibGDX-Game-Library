@@ -1,5 +1,7 @@
 package game.library.tick;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 import game.LibraryConstants;
@@ -30,6 +32,26 @@ public class Tick implements Poolable {
 	}
 
 	/**
+	 * Creates a new {@code Tick} reusing an object from the {@code TickPool}.
+	 * 
+	 * @return a reused tick object
+	 */
+	public static Tick create() {
+		return LibraryConstants.getTickPool().obtain();
+	}
+
+	/**
+	 * This is a preferred method of creating a tick as it reuses a tick from the
+	 * TickPool and will set the action and delay to the obtained tick.
+	 * 
+	 * @param action the action to set to the tick
+	 * @param delay  the delay of the tick
+	 */
+	public static Tick build(Runnable action, float delay) {
+		return LibraryConstants.getTickPool().obtain().action(action).delay(delay);
+	}
+
+	/**
 	 * Updates this {@code Tick} with the given delta. This method uses the delta to
 	 * determine the duration of the tick.
 	 * 
@@ -41,9 +63,8 @@ public class Tick implements Poolable {
 		this.duration += delta;
 
 		if (this.duration >= this.delay) {
+			Objects.requireNonNull(action, "The action of a Tick must be set!").run();
 			this.duration = 0;
-			if (action == null) throw new NullPointerException("The action of a Tick must be set!");
-			this.action.run();
 			this.occurences++;
 		}
 	}

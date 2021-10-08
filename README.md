@@ -88,9 +88,10 @@ Here is a list of all things to complete for this Library:
   - [ ] Location Following
   - [ ] Movement Interpolation
   
-- [ ] Projectiles
-  - [ ] Shooting
-  - [ ] Following  
+- [x] Projectiles
+  - [x] Movement Starting and Ending
+  - [x] Following / Tracking
+  - [ ] Interpolating Angle Changes
   
 - [ ] YAML Parser
   - [ ] Data Type Parsing

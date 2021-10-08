@@ -1,5 +1,7 @@
 package game.library.tick;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
@@ -37,7 +39,7 @@ public class TickPool extends Pool<Tick> {
 	public void update(float delta) {
 		for (int i = 0; i < this.runningTicks.size; i++) {
 			Tick tick = this.runningTicks.get(i);
-			if (tick == null) continue; // ignore empty spots in the array
+			if (Objects.isNull(tick)) continue; // ignore empty spots in the array
 
 			if (tick.isStopped()) {
 				this.free(tick);
@@ -46,20 +48,6 @@ public class TickPool extends Pool<Tick> {
 			}
 			tick.update(delta); // updates all ticks within the array
 		}
-	}
-
-	/**
-	 * Adds a new {@code Tick} to this {@code TickPool} with the given action and
-	 * delay.
-	 * 
-	 * @param action the action to execute
-	 * @param delay  the delay between actions
-	 * @return the tick created
-	 */
-	public Tick addTick(Runnable action, float delay) {
-		Tick tick = this.obtain().action(action).delay(delay);
-		this.runningTicks.add(tick);
-		return tick;
 	}
 
 	/**

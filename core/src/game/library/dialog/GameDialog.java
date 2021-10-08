@@ -1,6 +1,7 @@
 package game.library.dialog;
 
 import java.util.ArrayDeque;
+import java.util.Objects;
 
 /**
  * The {@code Dialog} class is used to create a conversation between any player
@@ -191,7 +192,7 @@ public class GameDialog {
 			transactor.displayDialogPage(page);
 		}
 
-		if (page.getAction() != null) page.getAction().run();
+		if (Objects.nonNull(page.getAction())) page.getAction().run();
 
 		return page;
 	}

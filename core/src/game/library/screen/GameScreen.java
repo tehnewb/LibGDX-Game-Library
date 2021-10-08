@@ -1,5 +1,7 @@
 package game.library.screen;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
@@ -152,7 +154,7 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Actor hitActor = this.getHitActor(screenX, screenY);
-		if (hitActor == null) {
+		if (Objects.isNull(hitActor)) {
 			this.screenStage.unfocusAll();
 		}
 		return this.interactable && this.screenStage.touchDown(screenX, screenY, pointer, button);

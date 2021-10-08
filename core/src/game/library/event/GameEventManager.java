@@ -1,6 +1,7 @@
 package game.library.event;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import com.badlogic.gdx.utils.Array;
 
@@ -8,11 +9,11 @@ import com.badlogic.gdx.utils.Array;
  * <p>
  * Holds {@code EventListener} implementations to listen for {@code Event} calls
  * that are relevant to them. Once an {@code EventListener} has been registered,
- * by the {@link GameEventManager#registerEventListener(GameEventListener)} method, any
- * method annotated by the {@code EventMethod} annotation will be registered to
- * listening to its relevant {@code Event}. If an {@code EventListener} has
- * successfully listened to an {@code Event}, any method that has been
- * registered within the listener will be called.
+ * by the {@link GameEventManager#registerEventListener(GameEventListener)}
+ * method, any method annotated by the {@code EventMethod} annotation will be
+ * registered to listening to its relevant {@code Event}. If an
+ * {@code EventListener} has successfully listened to an {@code Event}, any
+ * method that has been registered within the listener will be called.
  * 
  * @see game.library.event.GameEvent
  * @see game.library.event.GameEventListener
@@ -101,7 +102,7 @@ public class GameEventManager {
 	 * @throws NullPointerException if the listener argument is null
 	 */
 	public void registerEventListener(GameEventListener listener) {
-		if (listener == null) throw new NullPointerException("Cannot register NULL EventListener");
+		if (Objects.isNull(listener)) throw new NullPointerException("Cannot register NULL EventListener");
 
 		for (Method method : listener.getClass().getMethods()) {
 			if (method.getParameterTypes().length != 1) continue;
@@ -127,7 +128,7 @@ public class GameEventManager {
 
 		for (int index = 0; index < this.eventExecutors.size; index++) {
 			EventExecutor executor = this.eventExecutors.get(index);
-			if (executor == null) continue;
+			if (Objects.isNull(executor)) continue;
 			if (executor.equals(listener)) {
 				this.eventExecutors.set(index, null);
 			}
@@ -147,7 +148,7 @@ public class GameEventManager {
 	 * @throws NullPointerException if the event argument is null
 	 */
 	public void callEvent(GameEvent event) {
-		if (event == null) throw new NullPointerException("Cannot call a NULL Event");
+		Objects.requireNonNull(event, "Cannot call a NULL Event");
 
 		for (int index = 0; index < this.eventExecutors.size; index++) {
 			EventExecutor executor = this.eventExecutors.get(index);

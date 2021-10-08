@@ -3,6 +3,7 @@ package game.library.container;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * This is a container that holds a definite amount of items given by the
@@ -39,13 +40,11 @@ public class ItemContainer {
 	 * @throws NullPointerException if toTransfer is null
 	 */
 	public void transferToContainer(ItemContainer toTransfer) {
-		if (toTransfer == null) throw new NullPointerException("NULL ItemContainer cannot be transfered");
-
 		for (int index = 0; index < this.capacity; index++) {
 			Item item = this.get(index);
-			if (item == null) continue;
+			if (Objects.isNull(item)) continue;
 			this.set(index, null);
-			toTransfer.addItem(item);
+			Objects.requireNonNull(toTransfer, "NULL ItemContainer cannot be transfered").addItem(item);
 		}
 	}
 
@@ -59,9 +58,7 @@ public class ItemContainer {
 	 * @throws NullPointerException if the item argument is null
 	 */
 	public boolean addItem(Item item) {
-		if (item == null) throw new NullPointerException("NULL Item cannot be added to ItemContainer");
-
-		int searchIndex = this.indexOf(item.getId());
+		int searchIndex = this.indexOf(Objects.requireNonNull(item, "NULL Item cannot be added to ItemContainer").getId());
 		if (searchIndex == -1) { // this container does not have an item with that ID
 			if (!this.hasEmptySlots()) { // checking if this container has any more slots available for a new item
 				return false; // cannot add anymore items due to capacity of container
@@ -96,9 +93,7 @@ public class ItemContainer {
 	 * @throws NullPointerException if the item argument is null
 	 */
 	public boolean removeItem(Item item) {
-		if (item == null) throw new NullPointerException("NULL Item cannot be removed from ItemContainer");
-
-		int searchIndex = this.indexOf(item.getId());
+		int searchIndex = this.indexOf(Objects.requireNonNull(item, "NULL Item cannot be removed from ItemContainer").getId());
 		if (searchIndex == -1) { // check if the item id is found within the container
 			return false; // no item is found within the container to remove
 		} else { // item has been found with a returned search index
@@ -139,11 +134,11 @@ public class ItemContainer {
 	public Item set(int index, Item item) {
 		Item oldItem = this.items[index];
 		this.items[index] = item;
-		if (item == null && oldItem != null) { // check if new item we're setting is null and the old item isn't
+		if (Objects.isNull(item) && Objects.nonNull(oldItem)) { // check if new item we're setting is null and the old item isn't
 			this.size--; // since the new item is null, this is considered removal of the item at the given index, so we decrease item count
 		}
 
-		if (item != null && oldItem == null) { // check if new item isn't null and old item is
+		if (Objects.nonNull(item) && Objects.isNull(oldItem)) { // check if new item isn't null and old item is
 			this.size++; // since the new item isn't null, this is considered adding a new item, so we increase the item count
 		}
 		return oldItem;
@@ -186,7 +181,7 @@ public class ItemContainer {
 	 */
 	public void shift() {
 		ArrayList<Item> shifted = new ArrayList<Item>();
-		Arrays.asList(items).stream().filter(n -> n != null).forEach(n -> shifted.add(n));
+		Arrays.asList(items).stream().filter(n -> Objects.nonNull(n)).forEach(n -> shifted.add(n));
 		this.items = shifted.toArray(new Item[capacity]);
 	}
 
@@ -200,7 +195,7 @@ public class ItemContainer {
 	public int indexOf(int itemId) {
 		for (int index = 0; index < capacity; index++) {
 			Item item = this.items[index];
-			if (item == null) continue;
+			if (Objects.isNull(item)) continue;
 			if (item.getId() == itemId) return index;
 		}
 		return -1;
@@ -215,7 +210,7 @@ public class ItemContainer {
 	public int getFreeIndex() {
 		for (int index = 0; index < capacity; index++) {
 			Item item = this.items[index];
-			if (item == null) {
+			if (Objects.isNull(item)) {
 				return index;
 			}
 		}
