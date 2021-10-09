@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import game.library.screen.GameScreen;
-import game.main.screen.ApplicationScreen;
+import game.main.test_project.screens.LoadingScreen;
 
 /**
  * This class is the {@code ApplicationListener} for the application. Handles
@@ -32,7 +32,7 @@ public class GameApplicationListener implements ApplicationListener {
 		 */
 		LibraryConstants.load(Application.LOG_INFO);
 
-		this.setScreen(new ApplicationScreen(this));
+		this.setScreen(new LoadingScreen(this));
 	}
 
 	/**
@@ -53,10 +53,11 @@ public class GameApplicationListener implements ApplicationListener {
 	 * Called when the {@link Application} should render itself.
 	 */
 	public void render() {
-		ScreenUtils.clear(0, 0, 0, 0, true);
+		ScreenUtils.clear(0, 0, 0, 1, false);
 
 		if (Objects.nonNull(this.currentScreen)) {
 			this.currentScreen.render();
+			this.currentScreen.getRayHandler().render();
 			this.currentScreen.getStage().act();
 			this.currentScreen.getStage().draw();
 
@@ -64,7 +65,21 @@ public class GameApplicationListener implements ApplicationListener {
 
 			if (!GameApplicationListener.PAUSED) {
 				final float deltaTime = Gdx.graphics.getDeltaTime();
+
+				/**
+				 * World updating
+				 */
 				this.currentScreen.update(deltaTime);
+				this.currentScreen.getWorld().step(deltaTime, 1, 1);
+
+				/**
+				 * Ray handler updating
+				 */
+				this.currentScreen.getBatchCamera().update();
+				this.currentScreen.getRayHandler().setCombinedMatrix(this.currentScreen.getBatchCamera());
+				this.currentScreen.getRayHandler().update();
+				this.currentScreen.getScreenBatch().setProjectionMatrix(this.currentScreen.getBatchCamera().combined);
+
 				LibraryConstants.getTickPool().update(deltaTime);
 				LibraryConstants.getProjectilePool().update(deltaTime);
 			}

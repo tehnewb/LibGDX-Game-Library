@@ -6,16 +6,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import box2dLight.RayHandler;
 import game.GameApplicationListener;
 
 /**
@@ -52,11 +58,32 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	protected OrthographicCamera batchCamera;
 
+	/**
+	 * The ray handler is used for rendering lights to the world
+	 */
+	protected final RayHandler rayHandler;
+
+	/**
+	 * This is the world the ray handler uses and can be used for bodies
+	 */
+	protected final World world;
+
 	private OrthographicCamera stageCamera; // the camera used for the stage
 	private Viewport stageViewport; // the viewport used for the stage
 
 	private boolean interactable; // the flag used to determine if this screen is interactable
-	private Vector2 mouseVector; // the reusable vector for handling the mouse coordinates
+	private boolean transitioning; // the flag used to determine if this screen is transitioning
+	protected Vector2 mouseVector; // the reusable vector for handling the mouse coordinates
+
+	private Music currentMusic;
+
+	static {
+		/**
+		 * Sets the ray handler diffiuse light and gamma correction flags
+		 */
+		RayHandler.useDiffuseLight(false);
+		RayHandler.setGammaCorrection(false);
+	}
 
 	/**
 	 * Constructs a new {@code GameScreen} with the given {@code game} as the
@@ -66,6 +93,11 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	public GameScreen(GameApplicationListener game) {
 		this.game = game;
+		this.world = new World(new Vector2(0, 0), false);
+		this.rayHandler = new RayHandler(world);
+		this.rayHandler.setShadows(false);
+		this.rayHandler.setBlur(true);
+
 		this.batchCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stageCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stageViewport = new ScreenViewport(this.stageCamera);
@@ -76,6 +108,32 @@ public abstract class GameScreen implements InputProcessor {
 		this.screenBatch = new SpriteBatch();
 
 		Gdx.input.setInputProcessor(this); // sets this screen as the input processor
+	}
+
+	/**
+	 * Fades from this current screen to the next screen and sets the game
+	 * application's current screen to the new one.
+	 * 
+	 * @param newScreen the new screen to set
+	 */
+	public void transitionToScreen(final GameScreen newScreen) {
+		if (transitioning) return;
+
+		newScreen.interactable = false;
+		this.interactable = false;
+		this.screenStage.getRoot().getColor().a = 1;
+		SequenceAction sequenceAction = new SequenceAction();
+		sequenceAction.addAction(Actions.fadeOut(1.5f));
+
+		sequenceAction.addAction(Actions.run(() -> {
+			game.setScreen(newScreen);
+			newScreen.screenStage.getRoot().getColor().a = 0;
+			SequenceAction sequenceAction2 = new SequenceAction();
+			sequenceAction2.addAction(Actions.fadeIn(1.5f));
+			sequenceAction2.addAction(Actions.run(() -> newScreen.interactable = true));
+			newScreen.screenStage.getRoot().addAction(sequenceAction2);
+		}));
+		this.screenStage.getRoot().addAction(sequenceAction);
 	}
 
 	/**
@@ -98,6 +156,12 @@ public abstract class GameScreen implements InputProcessor {
 	 * @param delta the time between each frame
 	 */
 	public abstract void update(float delta);
+
+	/**
+	 * This method is called when this screen is disposed. This method should be
+	 * used to dispose anything this screen has created.
+	 */
+	public abstract void destroy();
 
 	/**
 	 * This method is called when the application is resized.
@@ -229,12 +293,43 @@ public abstract class GameScreen implements InputProcessor {
 	}
 
 	/**
+	 * Interpolates the camera position to the given target's position.
+	 * 
+	 * @param target the target to lerp to
+	 */
+	public void lerpCameraToTarget(Vector2 target, float lerpSpeed) {
+		Vector3 position = this.batchCamera.position;
+		position.x = this.batchCamera.position.x + (target.x - this.batchCamera.position.x) * lerpSpeed;
+		position.y = this.batchCamera.position.y + (target.y - this.batchCamera.position.y) * lerpSpeed;
+		this.batchCamera.position.set(position);
+		this.batchCamera.update();
+	}
+
+	/**
+	 * Sets the current music of this screen to the given argument and begins
+	 * playing the music.
+	 * 
+	 * @param music the music to set
+	 */
+	public void setMusic(Music music) {
+		if (Objects.nonNull(this.currentMusic)) {
+			this.currentMusic.stop();
+		}
+
+		this.currentMusic = Objects.requireNonNull(music);
+		this.currentMusic.play();
+	}
+
+	/**
 	 * Disposes this screen's stage, font, batch, and mouse vector.
 	 */
 	public void dispose() {
+		this.destroy();
 		this.screenStage.dispose();
 		this.screenFont.dispose();
 		this.screenBatch.dispose();
+		this.rayHandler.dispose();
+		this.world.dispose();
 		this.mouseVector = null;
 		this.stageCamera = null;
 		this.stageViewport = null;
@@ -269,6 +364,24 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	public SpriteBatch getScreenBatch() {
 		return screenBatch;
+	}
+
+	/**
+	 * Returns the ray handler used to render lights to this screen.
+	 * 
+	 * @return the ray handler
+	 */
+	public RayHandler getRayHandler() {
+		return rayHandler;
+	}
+
+	/**
+	 * Returns the world that handles the bodies and lights of this screen
+	 * 
+	 * @return the world
+	 */
+	public World getWorld() {
+		return world;
 	}
 
 	/**

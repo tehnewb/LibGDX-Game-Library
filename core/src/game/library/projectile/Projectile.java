@@ -164,9 +164,9 @@ public class Projectile implements Poolable {
 		if (this.direction.x == 0 && this.direction.y == 0) return;
 
 		if (Objects.nonNull(this.tracker)) {
-			if (!Objects.equals(this.tracker.getPosition(), this.endingLocation)) {
+			if (!Objects.equals(this.tracker.getPosition(), this.endingLocation)) { // check if the tracker's position has changed
 				this.beginning(this.position);
-				this.ending(this.tracker.getPosition());
+				this.ending(this.tracker.getPosition()); // set the new ending location to the tracker's position
 			}
 		}
 
@@ -176,14 +176,14 @@ public class Projectile implements Poolable {
 		float maxY = Math.max(this.endingLocation.y, this.beginningLocation.y);
 
 		this.position.add(direction.x * delta * speed, direction.y * delta * speed);
-		this.position.set(MathUtils.clamp(position.x, minX, maxX), MathUtils.clamp(position.y, minY, maxY));
+		this.position.set(MathUtils.clamp(position.x, minX, maxX), MathUtils.clamp(position.y, minY, maxY)); // this will clamp the position to the ending location
 
-		if (this.position.equals(this.endingLocation)) {
+		if (Objects.equals(this.position, this.endingLocation)) { // check if the position of this projectile is at the ending location, if so then reset it
 			this.reset();
 			return;
 		}
 
-		if (this.distanceLimit > 0 && this.beginningLocation.dst(this.position) >= this.distanceLimit) {
+		if (this.distanceLimit > 0 && this.beginningLocation.dst(this.position) >= this.distanceLimit) { // check if the projectile's location has past its distance limit, if so, then reset it
 			this.reset();
 			return;
 		}

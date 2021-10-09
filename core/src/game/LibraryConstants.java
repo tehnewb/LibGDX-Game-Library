@@ -1,9 +1,16 @@
 package game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
 
@@ -22,6 +29,7 @@ public final class LibraryConstants {
 
 	private static final GameEventManager EVENT_MANAGER = new GameEventManager();
 	private static final GameApplicationListener APPLICATION_LISTENER = new GameApplicationListener();
+	private static final AssetManager ASSET_MANAGER = new AssetManager();
 
 	/**
 	 * Loads all variables to be defined in the application.
@@ -40,6 +48,7 @@ public final class LibraryConstants {
 	 * @param logLevel the level of logging for the application
 	 */
 	public static void load(int logLevel) {
+
 		Gdx.app.setLogLevel(logLevel);
 
 		/**
@@ -71,6 +80,14 @@ public final class LibraryConstants {
 		 */
 		VisUI.load();
 		Gdx.app.log("Library Constants", "VisUI Skin Loaded.");
+
+		/**
+		 * Set the true type font loader
+		 */
+		FileHandleResolver resolver = new InternalFileHandleResolver();
+		ASSET_MANAGER.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+		ASSET_MANAGER.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+		Gdx.app.log("Library Constants", "True Type Font loader set.");
 
 		/**
 		 * After loading all constants, clear up any garbage that may have been
@@ -117,6 +134,39 @@ public final class LibraryConstants {
 	 */
 	public static GameApplicationListener getApplicationListener() {
 		return LibraryConstants.APPLICATION_LISTENER;
+	}
+
+	/**
+	 * Returns the {@code AssetManager} that this game loads assets with.
+	 * 
+	 * @return the asset manager
+	 */
+	public static AssetManager getAssetManager() {
+		return LibraryConstants.ASSET_MANAGER;
+	}
+
+	/**
+	 * Returns the asset of the given class type with the corresponding fileName.
+	 * 
+	 * @param <T>      the type of class
+	 * @param fileName the name of the file
+	 * @param clazz    the caster
+	 * @return the asset
+	 */
+	public static <T> T getAsset(String fileName) {
+		return LibraryConstants.ASSET_MANAGER.get(fileName);
+	}
+
+	/**
+	 * Returns the asset of the given class type with the corresponding fileName.
+	 * 
+	 * @param <T>      the type of class
+	 * @param fileName the name of the file
+	 * @param clazz    the caster
+	 * @return the asset
+	 */
+	public static <T> T getAsset(String fileName, Class<T> clazz) {
+		return LibraryConstants.ASSET_MANAGER.get(fileName, clazz);
 	}
 
 }
