@@ -78,20 +78,13 @@ Here is a list of all things to complete for this Library:
   - [ ] Sprite/Texture Pages
   - [x] Chaining System
 
-- [ ] Loot & Drop Table
-  - [ ] Specific Rarity Types (NORMAL, RARE, EXTRA_RARE)
-  - [ ] Specific Rarity Percentages (0.5%, 50%, 100%)
-  - [ ] Support for amount of items to drop
-  
-- [ ] Camera
-  - [ ] Entity Following
-  - [ ] Location Following
-  - [ ] Movement Interpolation
+- [X] Loot & Drop Table
+  - [X] Specific Rarity Percentages (0.5%, 50%, 100%)
+  - [X] Support for amount of items to drop
   
 - [x] Projectiles
   - [x] Movement Starting and Ending
   - [x] Following / Tracking
-  - [ ] Interpolating Angle Changes
   
 - [x] YAML Parser
   - [x] Data Type Parsing
