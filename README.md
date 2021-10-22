@@ -46,10 +46,10 @@ Here is a list of all things to complete for this Library:
   - [x] Screens Changable with application
   - [x] Render & Update Methods (Separated)
   
-- [ ] Rendering
-  - [ ] Sprite / Texture Overlays & Underlays
-  - [ ] Sprite / Texture Shading
-  - [ ] Lighting System
+- [x] Rendering
+  - [x] Sprite / Texture Overlays & Underlays
+  - [x] Sprite / Texture Shading
+  - [x] Lighting System
   
 - [x] Tick/Timer System
   - [x] Starting / Stopping
@@ -93,9 +93,9 @@ Here is a list of all things to complete for this Library:
   - [x] Following / Tracking
   - [ ] Interpolating Angle Changes
   
-- [ ] YAML Parser
-  - [ ] Data Type Parsing
-  - [ ] Map<K, V> Using
+- [x] YAML Parser
+  - [x] Data Type Parsing
+  - [x] Map<K, V> Using
   
 - [ ] Networking
   - [ ] Packet Sending / Recieving

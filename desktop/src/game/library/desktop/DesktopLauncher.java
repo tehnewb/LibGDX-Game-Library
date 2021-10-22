@@ -19,6 +19,7 @@ public class DesktopLauncher {
 		config.width = 1280; // 1280 pixels width for the application window
 		config.height = 720; // 720 pixels height for the application window
 		config.resizable = true;
+		config.vSyncEnabled = true;
 		config.title = " LibGDX Game Library";
 		new LwjglApplication(LibraryConstants.getApplicationListener(), config);
 	}

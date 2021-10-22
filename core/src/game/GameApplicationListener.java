@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import game.library.screen.GameScreen;
-import game.main.test_project.screens.LoadingScreen;
 
 /**
  * This class is the {@code ApplicationListener} for the application. Handles
@@ -31,8 +30,6 @@ public class GameApplicationListener implements ApplicationListener {
 		 * Load all constant variables for the library to use and sets the logging level
 		 */
 		LibraryConstants.load(Application.LOG_INFO);
-
-		this.setScreen(new LoadingScreen(this));
 	}
 
 	/**
@@ -133,6 +130,7 @@ public class GameApplicationListener implements ApplicationListener {
 			this.currentScreen.create();
 			this.currentScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		}
+		Gdx.input.setInputProcessor(screen);
 	}
 
 	/**

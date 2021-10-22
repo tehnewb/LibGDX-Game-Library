@@ -1,0 +1,2 @@
+./gradlew android:assembleRelease
+pause

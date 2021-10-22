@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * This class is used for pixmap utilities.
+ * 
+ * @author Albert Beaupre
+ */
 public class PixmapUtil {
 
 	public static Pixmap changeAlpha(Pixmap pixmap, float alpha) {

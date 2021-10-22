@@ -5,10 +5,12 @@ import java.util.Objects;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 import game.LibraryConstants;
+import game.library.util.CalcUtils;
 
 /**
  * This class is meant to act as a projectile within the game that can render a
@@ -18,6 +20,7 @@ import game.LibraryConstants;
  */
 public class Projectile implements Poolable {
 
+	private Rectangle bounds;
 	private Vector2 beginningLocation;
 	private Vector2 position;
 	private Vector2 direction;
@@ -54,6 +57,7 @@ public class Projectile implements Poolable {
 	 * projectile.
 	 */
 	public Projectile() {
+		this.bounds = new Rectangle();
 		this.beginningLocation = new Vector2(0, 0);
 		this.position = new Vector2(0, 0);
 		this.direction = new Vector2(0, 0);
@@ -91,7 +95,7 @@ public class Projectile implements Poolable {
 	 * @return this instance for chaining
 	 */
 	public Projectile ending(Vector2 endingLocation) {
-		this.angle = this.getAngle(this.position, endingLocation.set(endingLocation.x, endingLocation.y));
+		this.angle = CalcUtils.getAngle(this.position, endingLocation.set(endingLocation.x, endingLocation.y));
 		this.endingLocation.set(endingLocation.x, endingLocation.y);
 		this.direction.set(endingLocation.x - this.position.x, endingLocation.y - this.position.y).nor();
 
@@ -170,34 +174,26 @@ public class Projectile implements Poolable {
 			}
 		}
 
-		float minX = Math.min(this.endingLocation.x, this.beginningLocation.x);
-		float minY = Math.min(this.endingLocation.y, this.beginningLocation.y);
-		float maxX = Math.max(this.endingLocation.x, this.beginningLocation.x);
-		float maxY = Math.max(this.endingLocation.y, this.beginningLocation.y);
-
 		this.position.add(direction.x * delta * speed, direction.y * delta * speed);
-		this.position.set(MathUtils.clamp(position.x, minX, maxX), MathUtils.clamp(position.y, minY, maxY)); // this will clamp the position to the ending location
+		this.bounds.set(this.position.x, this.position.y, this.sprite.getWidth(), this.sprite.getHeight());
 
-		if (Objects.equals(this.position, this.endingLocation)) { // check if the position of this projectile is at the ending location, if so then reset it
-			this.reset();
-			return;
+		if (distanceLimit > 0) {
+			if (this.beginningLocation.dst(this.position) >= this.distanceLimit) { // check if the projectile's location has past its distance limit, if so, then reset it
+				this.reset();
+				return;
+			}
+		} else {
+			float minX = Math.min(this.endingLocation.x, this.beginningLocation.x);
+			float minY = Math.min(this.endingLocation.y, this.beginningLocation.y);
+			float maxX = Math.max(this.endingLocation.x, this.beginningLocation.x);
+			float maxY = Math.max(this.endingLocation.y, this.beginningLocation.y);
+			this.position.set(MathUtils.clamp(position.x, minX, maxX), MathUtils.clamp(position.y, minY, maxY)); // this will clamp the position to the ending location
+
+			if (Objects.equals(this.position, this.endingLocation)) { // check if the position of this projectile is at the ending location, if so then reset it
+				this.reset();
+				return;
+			}
 		}
-
-		if (this.distanceLimit > 0 && this.beginningLocation.dst(this.position) >= this.distanceLimit) { // check if the projectile's location has past its distance limit, if so, then reset it
-			this.reset();
-			return;
-		}
-	}
-
-	/**
-	 * Returns the angle from the starting vector to the ending vector.
-	 * 
-	 * @param start the starting location
-	 * @param end   the ending location
-	 * @return the angle in float type
-	 */
-	private float getAngle(Vector2 start, Vector2 end) {
-		return (float) (Math.atan2(end.y - start.y, end.x - start.x) * (180 / Math.PI));
 	}
 
 	/**
@@ -218,7 +214,7 @@ public class Projectile implements Poolable {
 	 * @return true if can be destroyed; return false otherwise
 	 */
 	public boolean canBeDestroyed() {
-		return position.x == 0 && position.y == 0;
+		return this.direction.x == 0 && this.direction.y == 0;
 	}
 
 }

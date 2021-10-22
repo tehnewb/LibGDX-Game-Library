@@ -11,14 +11,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import box2dLight.RayHandler;
@@ -68,14 +66,11 @@ public abstract class GameScreen implements InputProcessor {
 	 */
 	protected final World world;
 
-	private OrthographicCamera stageCamera; // the camera used for the stage
+	private Vector2 mouseVector; // the reusable vector for handling the mouse coordinates
 	private Viewport stageViewport; // the viewport used for the stage
-
+	private Music currentMusic;
 	private boolean interactable; // the flag used to determine if this screen is interactable
 	private boolean transitioning; // the flag used to determine if this screen is transitioning
-	protected Vector2 mouseVector; // the reusable vector for handling the mouse coordinates
-
-	private Music currentMusic;
 
 	static {
 		/**
@@ -95,19 +90,16 @@ public abstract class GameScreen implements InputProcessor {
 		this.game = game;
 		this.world = new World(new Vector2(0, 0), false);
 		this.rayHandler = new RayHandler(world);
+		this.rayHandler.setAmbientLight(0, 0, 0, 0.85f);
 		this.rayHandler.setShadows(false);
 		this.rayHandler.setBlur(true);
 
 		this.batchCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.stageCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		this.stageViewport = new ScreenViewport(this.stageCamera);
 		this.screenStage = new Stage(this.stageViewport);
 		this.screenFont = new BitmapFont();
 		this.mouseVector = new Vector2(Gdx.input.getX(), Gdx.input.getY());
 		this.interactable = true;
 		this.screenBatch = new SpriteBatch();
-
-		Gdx.input.setInputProcessor(this); // sets this screen as the input processor
 	}
 
 	/**
@@ -183,6 +175,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean keyDown(int keyCode) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.keyDown(keyCode);
 	}
 
@@ -193,6 +186,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean keyUp(int keyCode) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.keyUp(keyCode);
 	}
 
@@ -203,6 +197,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean keyTyped(char character) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.keyTyped(character);
 	}
 
@@ -217,6 +212,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		if (this.screenStage == null) return false;
 		Actor hitActor = this.getHitActor(screenX, screenY);
 		if (Objects.isNull(hitActor)) {
 			this.screenStage.unfocusAll();
@@ -233,6 +229,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.touchUp(screenX, screenY, pointer, button);
 	}
 
@@ -243,6 +240,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.touchDragged(screenX, screenY, pointer);
 	}
 
@@ -253,6 +251,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed
 	 */
 	public boolean mouseMoved(int screenX, int screenY) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.mouseMoved(screenX, screenY);
 	}
 
@@ -266,6 +265,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return whether the input was processed.
 	 */
 	public boolean scrolled(float amountX, float amountY) {
+		if (this.screenStage == null) return false;
 		return this.interactable && this.screenStage.scrolled(amountX, amountY);
 	}
 
@@ -275,6 +275,7 @@ public abstract class GameScreen implements InputProcessor {
 	 * @param action the action to add
 	 */
 	public void addAction(Action action) {
+		if (this.screenStage == null) return;
 		this.screenStage.addAction(action);
 	}
 
@@ -288,21 +289,9 @@ public abstract class GameScreen implements InputProcessor {
 	 * @return the actor hit; returns null if no actor is hit
 	 */
 	public Actor getHitActor(int screenX, int screenY) {
+		if (this.screenStage == null) return null;
 		this.screenStage.screenToStageCoordinates(this.mouseVector.set(screenX, screenY));
 		return this.screenStage.hit(mouseVector.x, mouseVector.y, false);
-	}
-
-	/**
-	 * Interpolates the camera position to the given target's position.
-	 * 
-	 * @param target the target to lerp to
-	 */
-	public void lerpCameraToTarget(Vector2 target, float lerpSpeed) {
-		Vector3 position = this.batchCamera.position;
-		position.x = this.batchCamera.position.x + (target.x - this.batchCamera.position.x) * lerpSpeed;
-		position.y = this.batchCamera.position.y + (target.y - this.batchCamera.position.y) * lerpSpeed;
-		this.batchCamera.position.set(position);
-		this.batchCamera.update();
 	}
 
 	/**
@@ -331,8 +320,6 @@ public abstract class GameScreen implements InputProcessor {
 		this.rayHandler.dispose();
 		this.world.dispose();
 		this.mouseVector = null;
-		this.stageCamera = null;
-		this.stageViewport = null;
 		this.screenFont = null;
 		this.screenBatch = null;
 		this.screenStage = null;
