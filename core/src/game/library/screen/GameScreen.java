@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import box2dLight.RayHandler;
@@ -90,11 +91,11 @@ public abstract class GameScreen implements InputProcessor {
 		this.game = game;
 		this.world = new World(new Vector2(0, 0), false);
 		this.rayHandler = new RayHandler(world);
-		this.rayHandler.setAmbientLight(0, 0, 0, 0.85f);
 		this.rayHandler.setShadows(false);
 		this.rayHandler.setBlur(true);
 
 		this.batchCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		this.stageViewport = new ScreenViewport(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.screenStage = new Stage(this.stageViewport);
 		this.screenFont = new BitmapFont();
 		this.mouseVector = new Vector2(Gdx.input.getX(), Gdx.input.getY());

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -47,7 +49,7 @@ public class PixmapUtil {
 		return newPixmap;
 	}
 
-	public static Pixmap outline(Pixmap pixmap) {
+	public static Pixmap outline(Pixmap pixmap, Color outlineColor) {
 		Pixmap newPixmap = new Pixmap(pixmap.getWidth(), pixmap.getHeight(), Format.RGBA8888);
 
 		newPixmap.setBlending(Blending.SourceOver);
@@ -57,7 +59,7 @@ public class PixmapUtil {
 				int beforePixelValue = pixmap.getPixel(x - 1, y);
 				int afterPixelValue = pixmap.getPixel(x + 1, y);
 				if (((beforePixelValue >> 24) == 0x00 && (pixelValue >> 24) != 0x00) || (((afterPixelValue >> 24) == 0x00 && (pixelValue >> 24) != 0x00))) {
-					newPixmap.setColor(Color.RED);
+					newPixmap.setColor(outlineColor);
 					newPixmap.drawPixel(x, y);
 				}
 			}
@@ -116,6 +118,26 @@ public class PixmapUtil {
 				color.a = 1 - center.dst(tile) / Math.max(width, height);
 				newPixmap.setColor(color);
 				newPixmap.drawPixel(x, y);
+			}
+		}
+		return newPixmap;
+	}
+
+	public static Pixmap convertToPixmap(Texture texture) {
+		if (!texture.getTextureData().isPrepared()) {
+			texture.getTextureData().prepare();
+		}
+		return texture.getTextureData().consumePixmap();
+	}
+
+	public static Pixmap convertToPixmap(TextureRegion region) {
+		Pixmap pixmap = convertToPixmap(region.getTexture());
+		Pixmap newPixmap = new Pixmap(region.getRegionWidth(), region.getRegionHeight(), Format.RGBA8888);
+		for (int x = 0; x <= newPixmap.getWidth(); x++) {
+			for (int y = 0; y <= newPixmap.getHeight(); y++) {
+				int pixelValue = pixmap.getPixel(region.getRegionX() + x, region.getRegionY() + y);
+				newPixmap.setColor(new Color(pixelValue));
+				newPixmap.drawPixel(pixelValue, y);
 			}
 		}
 		return newPixmap;
