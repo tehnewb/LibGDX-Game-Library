@@ -42,6 +42,7 @@ public class TickPool extends Pool<Tick> {
 			if (Objects.isNull(tick)) continue; // ignore empty spots in the array
 
 			if (tick.isStopped()) {
+				tick.reset();
 				this.free(tick);
 				this.runningTicks.set(i, null);
 				continue;
@@ -57,7 +58,12 @@ public class TickPool extends Pool<Tick> {
 	 * @param tick the tick to add
 	 */
 	public void addTick(Tick tick) {
-		this.runningTicks.add(tick);
+		int emptyIndex = this.runningTicks.indexOf(null, true);
+		if (emptyIndex != -1) {
+			this.runningTicks.set(emptyIndex, tick);
+		} else {
+			this.runningTicks.add(tick);
+		}
 	}
 
 	/**

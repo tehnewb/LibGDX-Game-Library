@@ -134,6 +134,8 @@ public class Tick implements Poolable {
 	public void reset() {
 		this.delay = 0;
 		this.duration = 0;
+		this.stopped = false;
+		this.action = null;
 	}
 
 }
