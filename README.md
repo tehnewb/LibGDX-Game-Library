@@ -58,12 +58,7 @@ Here is a list of all things to complete for this Library:
   - [x] Shifting Items
   - [x] Swapping Items
   - [x] Transfering Between Containers
-  
-- [ ] Action System
-  - [ ] Queuing
-  - [ ] Priorities (UNINTERRUPTABLE, INTERRUPTABLE)
-  - [ ] Timing for Actions
-  
+
 - [x] Dialog
   - [x] Text Pages
   - [x] Option Pages
