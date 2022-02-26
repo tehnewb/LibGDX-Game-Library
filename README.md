@@ -34,14 +34,6 @@ The following practices are necessary to succeed in this project.<b>
 </p>
 
 Here is a list of all things to complete for this Library:
-- [ ] GUI Components
-  - [ ] Button
-  - [ ] Label
-  - [ ] Window
-  - [ ] Scroll Bar
-  - [ ] Progress Bar
-  - [ ] Sound Effects
-  
 - [x] Screens
   - [x] Screens Changable with application
   - [x] Render & Update Methods (Separated)
