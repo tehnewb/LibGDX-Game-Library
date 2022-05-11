@@ -53,12 +53,6 @@ public class GameApplicationListener implements ApplicationListener {
 		ScreenUtils.clear(0, 0, 0, 1, false);
 
 		if (Objects.nonNull(this.currentScreen)) {
-			this.currentScreen.render();
-			this.currentScreen.getRayHandler().render();
-			this.currentScreen.getStage().act();
-			this.currentScreen.getStage().draw();
-
-			LibraryConstants.getProjectilePool().render(this.currentScreen.getScreenBatch());
 
 			if (!GameApplicationListener.PAUSED) {
 				final float deltaTime = Gdx.graphics.getDeltaTime();
@@ -80,6 +74,12 @@ public class GameApplicationListener implements ApplicationListener {
 				LibraryConstants.getTickPool().update(deltaTime);
 				LibraryConstants.getProjectilePool().update(deltaTime);
 			}
+			this.currentScreen.render();
+			this.currentScreen.getRayHandler().render();
+			this.currentScreen.getStage().act();
+			this.currentScreen.getStage().draw();
+
+			LibraryConstants.getProjectilePool().render(this.currentScreen.getScreenBatch());
 		}
 	}
 

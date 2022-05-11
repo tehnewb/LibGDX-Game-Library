@@ -1,0 +1,6 @@
+Requirements for the network library:
+
+-Must handle client disconnections
+-Must have a variable timer for connections. This means the client has to reconnect to the client if it doesn't already after a set timer
+-Must handle network exceptions
+-Must keep track of all client connections

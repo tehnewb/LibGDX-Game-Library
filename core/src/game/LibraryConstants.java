@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Pools;
 import com.kotcrab.vis.ui.VisUI;
 
@@ -66,7 +65,7 @@ public final class LibraryConstants {
 		/**
 		 * Load the VisUI skin.
 		 */
-		VisUI.load(new Skin());
+		VisUI.load();
 		Gdx.app.log("Library Constants", "Empty VisUI Skin Loaded.");
 
 		/**
