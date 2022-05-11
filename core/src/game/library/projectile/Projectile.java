@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 import game.LibraryConstants;
-import game.library.util.CalcUtils;
 
 /**
  * This class is meant to act as a projectile within the game that can render a
@@ -95,7 +94,7 @@ public class Projectile implements Poolable {
 	 * @return this instance for chaining
 	 */
 	public Projectile ending(Vector2 endingLocation) {
-		this.angle = CalcUtils.getAngle(this.position, endingLocation.set(endingLocation.x, endingLocation.y));
+		this.angle = getAngle(this.position, endingLocation.set(endingLocation.x, endingLocation.y));
 		this.endingLocation.set(endingLocation.x, endingLocation.y);
 		this.direction.set(endingLocation.x - this.position.x, endingLocation.y - this.position.y).nor();
 
@@ -205,6 +204,10 @@ public class Projectile implements Poolable {
 		this.beginningLocation.set(0, 0);
 		this.position.set(0, 0);
 		this.direction.set(0, 0);
+	}
+
+	private float getAngle(Vector2 start, Vector2 end) {
+		return (float) (Math.atan2(end.y - start.y, end.x - start.x) * (180f / Math.PI));
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package game.library.util.config;
+package game.library.util.yaml;
 
 import java.io.InputStream;
 import java.util.ArrayList;

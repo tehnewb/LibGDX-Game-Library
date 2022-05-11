@@ -1,4 +1,4 @@
-package game.library.util.config;
+package game.library.util.yaml;
 
 /**
  * Used for serialization of YAML scripts.
