@@ -76,8 +76,13 @@ Here is a list of all things to complete for this Library:
 - [x] YAML Parser
   - [x] Data Type Parsing
   - [x] Map<K, V> Using
+    
+- [ ] Cache - Index based Archive system (Mostly used for obtaining updates to a game's file system)
+  - [ ] Cache editing
+  - [ ] Cache loading
+  - [ ] Cache saving
   
 - [ ] Networking
   - [ ] Packet Sending / Recieving
   - [ ] Packets Organized by Operation Codes
-  - [ ] Large Data Transfers
+  - [ ] File Updating (Especially for cache system)
